@@ -1,3 +1,5 @@
+
+
 public class Mosindex_infl {
     public static final double[] MOEX_RATE = {
             417.42,
