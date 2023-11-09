@@ -1,5 +1,5 @@
 /*
- * Класс FREE калькулятор
+ * Класс FIRE калькулятор
  *
  * 1.0
  *
@@ -82,7 +82,7 @@ public class FreeCalc {
 
              first = this.firstCondition(i);
 
-            if ((first) || (i > answer)) {
+            if ((first) && (i > answer)) {
                 answer = i;
             }
         }
