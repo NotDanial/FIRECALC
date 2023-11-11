@@ -7,8 +7,6 @@
  */
 
 public class FreeCalc {
-    public int startYear;
-    private double[] indexGrow;
     private static FreeCalc freecalc;
     private final int TARGET_YEAR;
 
@@ -23,28 +21,27 @@ public class FreeCalc {
     }
 
     private FreeCalc() {
-
         TARGET_YEAR = 2022;
-
     }
 
     /**
      * ...Рассчет % роста индексации...
      */
-    private void indexGrow(double[] MOEX_RATE) {
+    private double[] indexGrow(double[] MOEX_RATE) {
 
-        indexGrow = new double[MOEX_RATE.length - 1];
+        double[ ] indexGrow = new double[MOEX_RATE.length - 1];
 
         for (int i = 0; i < MOEX_RATE.length - 1; i++) {
             indexGrow[i] = (MOEX_RATE[i + 1] - MOEX_RATE[i]) / MOEX_RATE[i] * 100;
         }
-
+        return  indexGrow;
     }
 
     /**
      * ...Проверка условия , что капитал > 0, при ежегодных вычетах...
      */
-    private boolean firstCondition(double withdrawalPercantage) {
+    private boolean firstCondition(double withdrawalPercantage , double[] indexGrow, int startYear) {
+
         double capital = 100;
         double annualPayment = capital * withdrawalPercantage / 100;
 
@@ -56,7 +53,7 @@ public class FreeCalc {
             }
 
             capital = capital * (1 + indexGrow[i] / 100);
-            annualPayment = annualPayment * (1 + Mosindex_infl.INFLATION_RATE[i] / 100);
+            annualPayment = annualPayment * (1 + MosIndexInflation.INFLATION_RATE[i] / 100);
         }
 
         return true;
@@ -67,20 +64,17 @@ public class FreeCalc {
      * ...Основной метод класса...
      */
     public void calculate(int year) throws Exception {
-        double answer = 1;
         boolean first;
-
-        startYear = year;
+        double answer = 1;
+        double[] indexGrow = indexGrow(MosIndexInflation.MOEX_RATE);
 
         if ((year < 2002) || (year > 2021)) {
             throw new Exception("throws Exception…");
         }
 
-        this.indexGrow(Mosindex_infl.MOEX_RATE);
-
         for (double i = 2.0; i <= 100; i = i + 0.5) {
 
-             first = this.firstCondition(i);
+             first = this.firstCondition(i, indexGrow, year);
 
             if ((first) && (i > answer)) {
                 answer = i;
