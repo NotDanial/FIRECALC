@@ -68,7 +68,7 @@ public class FreeCalc {
         double answer = 1;
         double[] indexGrow = indexGrow(MosIndexInflation.MOEX_RATE);
 
-        if ((year < 2002) || (year > 2021)) {
+        if ((year < 2002) || (year > TARGET_YEAR - 1)) {
             throw new Exception("throws Exception…");
         }
 
