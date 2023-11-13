@@ -1,6 +1,6 @@
 
 
-public class MosIndexInflation {
+public class Constants {
     public static final double[] MOEX_RATE = {
             417.42,
             673.72,

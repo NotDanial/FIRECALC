@@ -8,7 +8,7 @@
 
 public class FreeCalc {
     private static FreeCalc freecalc;
-    private final int TARGET_YEAR;
+    private final int TARGET_YEAR = 2022;
 
     public static FreeCalc getFreeCalc() {
 
@@ -18,10 +18,6 @@ public class FreeCalc {
 
         return freecalc;
 
-    }
-
-    private FreeCalc() {
-        TARGET_YEAR = 2022;
     }
 
     /**
@@ -38,7 +34,8 @@ public class FreeCalc {
     }
 
     /**
-     * ...Проверка условия , что капитал > 0, при ежегодных вычетах...
+     * ...Запуск цикла по годам с проверкой условия ,
+     * ...что капитал > 0, при ежегодных вычетах
      */
     private boolean firstCondition(double withdrawalPercantage , double[] indexGrow, int startYear) {
 
@@ -53,7 +50,7 @@ public class FreeCalc {
             }
 
             capital = capital * (1 + indexGrow[i] / 100);
-            annualPayment = annualPayment * (1 + MosIndexInflation.INFLATION_RATE[i] / 100);
+            annualPayment = annualPayment * (1 + Constants.INFLATION_RATE[i] / 100);
         }
 
         return true;
@@ -61,12 +58,13 @@ public class FreeCalc {
     }
 
     /**
-     * ...Основной метод класса...
+     * ...Запуск работы калькулятора. Здесь же находиться цикл, необходимый
+     * ...для поиска максимального возможного процента изьятия
      */
-    public void calculate(int year) throws Exception {
+    public double calculate(int year) throws Exception {
         boolean first;
         double answer = 1;
-        double[] indexGrow = indexGrow(MosIndexInflation.MOEX_RATE);
+        double[] indexGrow = indexGrow(Constants.MOEX_RATE);
 
         if ((year < 2002) || (year > TARGET_YEAR - 1)) {
             throw new Exception("throws Exception…");
@@ -81,13 +79,7 @@ public class FreeCalc {
             }
         }
 
-        this.showAnswer(answer);
+        return answer;
     }
 
-    /**
-     * ...Вывод результата калькулятора...
-     */
-    private void showAnswer(double answer) {
-        System.out.println(answer);
-    }
 }
