@@ -54,7 +54,7 @@ public class FreeCalc {
      * ...для поиска максимального возможного процента изьятия
      */
     public double calculate(int year) throws Exception {
-        boolean first;
+        boolean percIsGood;
         double answer = 1;
         double[] indexGrow = getIndexGrow(Constants.MOEX_RATE);
 
@@ -64,9 +64,9 @@ public class FreeCalc {
 
         for (double i = 2.0; i <= 100; i = i + 0.5) {
 
-             first = this.checkPercentage(i, indexGrow, year);
+             percIsGood = this.checkPercentage(i, indexGrow, year);
 
-            if ((first) && (i > answer)) {
+            if ((percIsGood) && (i > answer)) {
                 answer = i;
             }
         }
